@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c3c64269e1de047b3e4411ec42d75e, type: 3}
+  m_Name: ElementManager
+  m_EditorClassIdentifier: 
+  airAbilities:
+    rightClick: {fileID: 0}
+    leftClick: {fileID: 0}
+    f: {fileID: 0}
+    q: {fileID: 0}
+  fireAbilities:
+    rightClick: {fileID: 0}
+    leftClick: {fileID: 0}
+    f: {fileID: 0}
+    q: {fileID: 0}
+  waterAbilities:
+    rightClick: {fileID: 0}
+    leftClick: {fileID: 0}
+    f: {fileID: 0}
+    q: {fileID: 0}
+  earthAbilities:
+    rightClick: {fileID: 11400000, guid: efce71ede63b6754fb85dd6e0a96b28c, type: 2}
+    leftClick: {fileID: 11400000, guid: efce71ede63b6754fb85dd6e0a96b28c, type: 2}
+    f: {fileID: 11400000, guid: 883fe04a73f6a2840bc70b1e5716d3a8, type: 2}
+    q: {fileID: 11400000, guid: efce71ede63b6754fb85dd6e0a96b28c, type: 2}

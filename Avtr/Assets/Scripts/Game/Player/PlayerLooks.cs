@@ -34,7 +34,7 @@ public class PlayerLooks : MonoBehaviour
     [PunRPC]
     public void RPC_SetLooks(string eleme)
     {
-        ELEMENT elem = (ELEMENT)Enum.Parse(typeof(ELEMENT), eleme);
+        ELEMENT elem = ELEMENT.Fire;// (ELEMENT)Enum.Parse(typeof(ELEMENT), eleme);
         options.ToList().ForEach(i => i.reference.SetActive(false));
         options.FirstOrDefault(i => i.element == elem).reference.SetActive(true);
     }

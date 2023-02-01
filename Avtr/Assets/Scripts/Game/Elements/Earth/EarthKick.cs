@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Elements
 {
-    [CreateAssetMenu(fileName = "EarthKick", menuName = "Elements/Earth/Kick", order = 1)]
+    [CreateAssetMenu(fileName = "EarthKick", menuName = "Elements/Earth/Earth Kick", order = 1)]
     public class EarthKick : ElementAbility
     {
         public override ELEMENT element => ELEMENT.Earth;
@@ -16,7 +16,8 @@ namespace Elements
         public override void Trigger(AbilityInfo info)
         {
             info.bendables.Where(
-                i => Vector3.Distance(i.transform.position, info.playerTransform.position) < 2f &&
+                i => i.Element == ELEMENT.Earth &&
+                Vector3.Distance(i.transform.position, info.playerTransform.position) < 2f &&
                 Vector3.Dot(i.transform.position - info.playerTransform.position, info.playerTransform.forward) > 0f)
                 .ToList().ForEach(i =>
             {

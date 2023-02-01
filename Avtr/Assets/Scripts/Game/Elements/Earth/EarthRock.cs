@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Elements
 {
-    [CreateAssetMenu(fileName = "EarthRock", menuName = "Elements/Earth/Rock", order = 1)]
+    [CreateAssetMenu(fileName = "EarthRock", menuName = "Elements/Earth/Earth Rock", order = 1)]
     public class EarthRock : ElementAbility
     {
 

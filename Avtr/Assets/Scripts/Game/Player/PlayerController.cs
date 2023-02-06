@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
+public class PlayerController : HittableEntity
 {
     [Header("References")]
     [SerializeField] GameObject localClient;
@@ -21,10 +21,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
     
     [Header("Other")]
     [SerializeField] LayerMask whatIsGround;
-    [SerializeField] bool DEBUGMODE = false;
 
-    [Header("Items")]
-    [SerializeField] Item[] items;
 
     int itemIndex;
     int previousItemIndex = -1;
@@ -43,14 +40,21 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     PlayerManager playerManager;
 
+    private bool isMine = false;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         PV = GetComponent<PhotonView>();
 
-        if (!DEBUGMODE)
+        if (!RoomManager.Training)
         {
             playerManager = PhotonView.Find((int)PV.InstantiationData[0]).GetComponent<PlayerManager>();
+            isMine = PV.IsMine;
+        } else
+        {
+            playerManager = FindObjectOfType<PlayerManager>();
+            isMine = true;
         }
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -61,7 +65,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void Start()
     {
-        if (PV.IsMine)
+        if (isMine)
         {
             EquipItem(0);
             Destroy(notLocalClient);
@@ -75,12 +79,13 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void Update()
     {
-        if (!PV.IsMine)
+        if (!isMine)
             return;
 
         Look();
         Move();
 
+        /* Old item code, left in for network referencing
         for (int i = 0; i < items.Length; i++)
         {
             if (Input.GetKeyDown((i + 1).ToString()))
@@ -101,7 +106,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
         if (Input.GetMouseButtonDown(0))
         {
             items[itemIndex].Use();
-        }
+        } */
 
         if (transform.position.y < -10f)
         {
@@ -138,6 +143,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void EquipItem(int _index)
     {
+        /* Old item code, left in for network referencing
         if (_index == previousItemIndex) return;
         if (_index < 0) _index = items.Length - 1;
         if (_index >= items.Length) _index = 0;
@@ -157,12 +163,12 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
             Hashtable hash = new Hashtable();
             hash.Add("itemIndex", itemIndex);
             PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
-        }
+        }*/
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        if (!PV.IsMine && targetPlayer == PV.Owner)
+        if (!isMine && targetPlayer == PV.Owner)
         {
             if (changedProps.ContainsKey("itemIndex"))
             {
@@ -173,7 +179,7 @@ public class PlayerController : MonoBehaviourPunCallbacks, IDamageable
 
     private void FixedUpdate()
     {
-        if (!PV.IsMine)
+        if (!isMine)
             return;
 
         rb.MovePosition(rb.position + transform.TransformDirection(moveAmount) * Time.fixedDeltaTime);

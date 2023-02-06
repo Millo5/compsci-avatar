@@ -9,6 +9,9 @@ public class RoomManager : MonoBehaviourPunCallbacks
 {
     public static RoomManager Instance;
 
+    private static bool training = false; 
+    public static bool Training => training;
+
     private void Awake()
     {
         if (Instance)
@@ -35,8 +38,19 @@ public class RoomManager : MonoBehaviourPunCallbacks
     {
         if (scene.buildIndex == 1)  // Loading into game scene
         {
+            training = false;
             PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerManager"), Vector3.zero, Quaternion.identity);
         }
+        if (scene.buildIndex == 2)  // Loading into training scene
+        {
+            EnterTraining();
+        }
+    }
+
+    public void EnterTraining()
+    {
+        training = true;
+        Instantiate(Resources.Load(Path.Combine("PhotonPrefabs", "PlayerManager")), Vector3.zero, Quaternion.identity);
     }
 
 }

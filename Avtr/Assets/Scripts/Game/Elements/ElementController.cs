@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Rendering.FilterWindow;
 
 public class ElementController : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ElementController : MonoBehaviour
     // Element Controller Variables
     [SerializeField] ElementManager elementManager;
     private ELEMENT element;
+    private CooldownDisplay cdDisplay;
 
     List<AbilityIndex> abilities;
 
@@ -22,33 +24,58 @@ public class ElementController : MonoBehaviour
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
+        cdDisplay = GetComponent<CooldownDisplay>();
     }
 
     private void Start()
     {
-        element = (ELEMENT)Enum.Parse(typeof(ELEMENT), (string)PhotonNetwork.LocalPlayer.CustomProperties["element"]);
-        //element = ELEMENT.Fire;
+        if (!RoomManager.Training)
+        {
+            element = (ELEMENT)Enum.Parse(typeof(ELEMENT), (string)PhotonNetwork.LocalPlayer.CustomProperties["element"]);
+        } else
+        {
+            element = (ELEMENT)Enum.Parse(typeof(ELEMENT), PlayerPrefs.GetString("element"));
+        }
 
+        Initialize();
+        UpdateAbilities();
+    }
+
+    public void ReInitialize() => Initialize();
+    private void Initialize()
+    {
+        lastSphere = null;
+    }
+
+    private void UpdateAbilities() {
         abilities = new List<AbilityIndex>();
 
-        // fill abilities with correct ability indexes
-        
-        initAbility(0, elementManager.getAbilities(element).leftClick);
-        initAbility(1, elementManager.getAbilities(element).rightClick);
-        initAbility(KeyCode.Q, elementManager.getAbilities(element).q);
-        initAbility(KeyCode.F, elementManager.getAbilities(element).f);
-        
+        initAbility(0,                  elementManager.getAbilities(element).leftClick,     ABILKEY.LC);
+        initAbility(1,                  elementManager.getAbilities(element).rightClick,    ABILKEY.RC);
+        initAbility(KeyCode.Q,          elementManager.getAbilities(element).q,             ABILKEY.Q);
+        initAbility(KeyCode.F,          elementManager.getAbilities(element).f,             ABILKEY.F);
+        initAbility(KeyCode.E,          elementManager.getAbilities(element).e,             ABILKEY.E);
+        initAbility(KeyCode.LeftShift,  elementManager.getAbilities(element).shift,         ABILKEY.SHIFT);
+
     }
 
-    private void initAbility(int mouseInd, ElementAbility abil)
+    public void SetElement(ELEMENT element)
     {
-        if (abil.canHold) abilities.Add(new AbilityIndex(() => Input.GetMouseButton(mouseInd), abil));
-        else abilities.Add(new AbilityIndex(() => Input.GetMouseButtonDown(mouseInd), abil));
+        this.element = element;
+        UpdateAbilities();
     }
-    private void initAbility(KeyCode key, ElementAbility abil)
+
+    private void initAbility(int mouseInd, ElementAbility abil, ABILKEY key)
     {
-        if (abil.canHold) abilities.Add(new AbilityIndex(() => Input.GetKey(key), abil));
-        else abilities.Add(new AbilityIndex(() => Input.GetKeyDown(key), abil));
+        if (abil == null) return;
+        if (abil.canHold) abilities.Add(new AbilityIndex(() => Input.GetMouseButton(mouseInd), abil, key));
+        else abilities.Add(new AbilityIndex(() => Input.GetMouseButtonDown(mouseInd), abil, key));
+    }
+    private void initAbility(KeyCode key, ElementAbility abil, ABILKEY akey)
+    {
+        if (abil == null) return;
+        if (abil.canHold) abilities.Add(new AbilityIndex(() => Input.GetKey(key), abil, akey));
+        else abilities.Add(new AbilityIndex(() => Input.GetKeyDown(key), abil, akey));
     }
 
 
@@ -68,9 +95,10 @@ public class ElementController : MonoBehaviour
         {
             AbilityIndex abilInd = abilities[i];
 
-            abilInd.ability.Update(GetInfo());
+            abilInd.ability.Tick(GetInfo());
 
             if (abilInd.currentCooldown > 0f) abilInd.currentCooldown = Mathf.Max(abilInd.currentCooldown - Time.deltaTime, 0f);
+            cdDisplay.SetCooldown(abilInd.abilkey, abilInd.currentCooldown, abilInd.ability.cooldown);
 
             if (!abilInd.key()) continue;
             if (abilInd.currentCooldown > 0f) continue;
@@ -82,19 +110,21 @@ public class ElementController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate() => abilities.ForEach(i => i.ability.FixedUpdate(GetInfo()));
+    private void FixedUpdate() => abilities.ForEach(i => i.ability.FixedTick(GetInfo()));
 
     private class AbilityIndex
     {
         public float currentCooldown;
         public Func<bool> key;
         public ElementAbility ability;
+        public ABILKEY abilkey;
 
-        public AbilityIndex(Func<bool> key, ElementAbility ability)
+        public AbilityIndex(Func<bool> key, ElementAbility ability, ABILKEY abilkey)
         {
             currentCooldown = 0f;
             this.key = key;
             this.ability = ability;
+            this.abilkey = abilkey;
         }
     }
 

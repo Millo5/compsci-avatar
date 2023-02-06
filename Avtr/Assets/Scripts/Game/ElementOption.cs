@@ -13,6 +13,16 @@ public enum ELEMENT
     Earth,
     None
 }
+public enum ABILKEY
+{
+    RC,
+    LC,
+    F,
+    Q,
+    E,
+    SHIFT
+}
+
 
 public class ElementOption : MonoBehaviour
 {

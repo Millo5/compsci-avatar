@@ -15,15 +15,21 @@ public class PlayerManager : MonoBehaviour
 
     public int killCount;
 
+    private bool isMine = false;
+
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
+
+        isMine = PV.IsMine;
+
+        if (RoomManager.Training) isMine = true;
     }
 
     private void Start()
     {
         killCount = 0;
-        if (PV.IsMine)
+        if (isMine)
         {
             CreateController();
         }
@@ -31,8 +37,16 @@ public class PlayerManager : MonoBehaviour
 
     private void CreateController()
     {
-        Transform spawnpoint = SpawnManager.Instance.GetSpawnpoint();
-        controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
+        if (!RoomManager.Training)
+        {
+            Transform spawnpoint = SpawnManager.Instance.GetSpawnpoint();
+            controller = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerController"), spawnpoint.position, spawnpoint.rotation, 0, new object[] { PV.ViewID });
+        } else
+        {
+            Transform spawnpoint = SpawnManager.Instance.GetSpawnpoint();
+            Object prefab = Resources.Load(Path.Combine("PhotonPrefabs", "PlayerController"));
+            Instantiate(prefab, spawnpoint.position, spawnpoint.rotation);
+        }
     }
 
     public void Die()

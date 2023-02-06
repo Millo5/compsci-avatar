@@ -24,4 +24,14 @@ public class BendableObject : MonoBehaviour
         Gizmos.DrawCube(transform.position - Vector3.up * bottomDistance, new Vector3(0.3f, 0.05f, 0.3f));
     }
 
+    public virtual void Destroy()
+    {
+        Destroy(gameObject);
+    }
+
+    protected HittableEntity[] GetAllHittables()
+    {
+        return FindObjectsOfType<HittableEntity>();
+    }
+
 }

@@ -17,7 +17,7 @@ namespace Elements
 
         public override float cooldown => 1.2f;
 
-        public override void FixedUpdate(AbilityInfo info)
+        public override void FixedTick(AbilityInfo info)
         {
             triggerIndex += 1f;
 

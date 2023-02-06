@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 37c3c64269e1de047b3e4411ec42d75e, type: 3}
-  m_Name: ElementManager
+  m_Name: _ElementManager
   m_EditorClassIdentifier: 
   airAbilities:
     rightClick: {fileID: 0}
     leftClick: {fileID: 0}
     f: {fileID: 0}
-    q: {fileID: 0}
+    q: {fileID: 11400000, guid: b9d45554ef925a6418cdd5878d332f19, type: 2}
   fireAbilities:
     rightClick: {fileID: 0}
-    leftClick: {fileID: 0}
+    leftClick: {fileID: 11400000, guid: ec42d613e28875549b70eb8c6dc2a994, type: 2}
     f: {fileID: 0}
     q: {fileID: 0}
   waterAbilities:

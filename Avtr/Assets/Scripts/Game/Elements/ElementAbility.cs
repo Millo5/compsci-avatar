@@ -14,8 +14,8 @@ public abstract class ElementAbility : ScriptableObject
 
     public abstract void Trigger(AbilityInfo info);
 
-    public virtual void Update(AbilityInfo info) { }
-    public virtual void FixedUpdate(AbilityInfo info) { }
+    public virtual void Tick(AbilityInfo info) { }
+    public virtual void FixedTick(AbilityInfo info) { }
 
 }
 

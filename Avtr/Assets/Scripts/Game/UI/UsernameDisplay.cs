@@ -17,6 +17,8 @@ public class UsernameDisplay : MonoBehaviour
 
     private void Start()
     {
+        if (RoomManager.Training) return;
+
         text.text = PV.Owner.NickName;
     }
 

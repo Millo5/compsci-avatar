@@ -37,4 +37,6 @@ public struct ElementAbilities
     public ElementAbility leftClick;
     public ElementAbility f;
     public ElementAbility q;
+    public ElementAbility e;
+    public ElementAbility shift;
 }

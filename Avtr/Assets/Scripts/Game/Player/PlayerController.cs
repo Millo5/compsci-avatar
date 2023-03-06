@@ -19,19 +19,15 @@ public class PlayerController : HittableEntity
     [SerializeField] float mouseSensitivity;
     [SerializeField] float sprintSpeed, walkSpeed, jumpForce, smoothTime, smoothTimeAirborne;
     
-    [Header("Other")]
-    [SerializeField] LayerMask whatIsGround;
 
 
     int itemIndex;
     int previousItemIndex = -1;
 
     float verticalLookRotation;
-    bool grounded => Physics.CheckBox(transform.position, new Vector3(0.3f, 0.05f, 0.3f), transform.rotation, whatIsGround);
     Vector3 smoothMoveVelocity;
     Vector3 moveAmount;
 
-    Rigidbody rb;
 
     PhotonView PV;
 
@@ -42,9 +38,10 @@ public class PlayerController : HittableEntity
 
     private bool isMine = false;
 
-    private void Awake()
+    protected override void Awake()
     {
-        rb = GetComponent<Rigidbody>();
+        base.Awake();
+
         PV = GetComponent<PhotonView>();
 
         if (!RoomManager.Training)
@@ -207,6 +204,12 @@ public class PlayerController : HittableEntity
     private void Die()
     {
         playerManager.Die();
+    }
+
+
+    public void SetVelocity()
+    {
+        print("ffs");
     }
 }
 

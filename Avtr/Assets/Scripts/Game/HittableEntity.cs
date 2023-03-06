@@ -1,6 +1,7 @@
 ﻿
 
 using Photon.Pun;
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -8,19 +9,33 @@ using UnityEngine;
 public class HittableEntity : MonoBehaviourPunCallbacks
 {
 
-    Rigidbody rb;
-    private void Awake()
+    protected Rigidbody rb;
+
+    [Header("Hittable Entity")]
+    [SerializeField] LayerMask whatIsGround;
+    protected bool grounded => Physics.CheckBox(transform.position, new Vector3(0.3f, 0.05f, 0.3f), transform.rotation, whatIsGround);
+
+    protected virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
     }
 
     private void FixedUpdate()
     {
-        
+        rb.velocity *= 0.9f;
     }
 
-    public virtual void Knockback(Vector3 force)
+    public void SetVelocity(Vector3 vel)
     {
-        rb.AddForce(force);
+        rb.velocity = vel;
+    }
+    public virtual void Knockback(Vector3 force, float magnitude = 1f)
+    {
+        rb.AddForce(force * magnitude, ForceMode.Impulse);
+    }
+
+    public Rigidbody GetRigidbody()
+    {
+        return rb;
     }
 }

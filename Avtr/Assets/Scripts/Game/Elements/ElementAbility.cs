@@ -17,6 +17,9 @@ public abstract class ElementAbility : ScriptableObject
     public virtual void Tick(AbilityInfo info) { }
     public virtual void FixedTick(AbilityInfo info) { }
 
+    protected void print(object ob) => MonoBehaviour.print(ob);
+
+
 }
 
 public struct AbilityInfo
@@ -25,4 +28,5 @@ public struct AbilityInfo
     public Camera playerCamera;
     public BendableObject[] bendables;
     public ElementController caster;
+    public BendableObject targetBendable;
 }

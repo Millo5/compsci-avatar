@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
 
-public class BendableAirsphere : BendableObject
+public class BendableAirsphere : BendableObject, ITargetable
 {
 
 
@@ -16,9 +16,12 @@ public class BendableAirsphere : BendableObject
     public ElementController owner;
 
     Rigidbody rb;
-    private void Awake()
+    Collider col;
+    protected void Awake()
     {
+        base.Awake();
         rb = GetComponent<Rigidbody>();
+        col = GetComponent<Collider>();
     }
 
     private void Start()
@@ -27,12 +30,17 @@ public class BendableAirsphere : BendableObject
     }
 
 
-    private void Update()
+    protected void Update()
     {
-        // damage nearby players
-        GetAllHittables()
-            .Where(t => Vector3.Distance(t.transform.position, transform.position) < 1f)
-            .ToList().ForEach(x => x.Knockback(Vector3.up));
+        base.Update();
+
+        // push away nearby players
+        hittablesInTrigger
+            .Where(i => i != owner.controller).ToList()
+            .ForEach(x => x.Knockback(x.transform.position + Vector3.up - transform.position));
+
+
+
 
         // Rotate
         wobble += Time.deltaTime;
@@ -58,4 +66,9 @@ public class BendableAirsphere : BendableObject
         destroy = true;
     }
 
+    public bool CastAbility()
+    {
+
+        return false;
+    }
 }

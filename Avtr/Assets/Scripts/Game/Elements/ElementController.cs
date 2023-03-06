@@ -3,6 +3,7 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static UnityEditor.Rendering.FilterWindow;
 
@@ -16,7 +17,10 @@ public class ElementController : MonoBehaviour
 
     List<AbilityIndex> abilities;
 
-    PhotonView PV;
+    [SerializeField] Material selectedMaterial;
+
+    private PhotonView PV;
+    public PlayerController controller { private set; get; }
 
     // Element Specific Variables
     public BendableAirsphere lastSphere;
@@ -29,6 +33,7 @@ public class ElementController : MonoBehaviour
 
     private void Start()
     {
+        controller = GetComponent<PlayerController>();
         if (!RoomManager.Training)
         {
             element = (ELEMENT)Enum.Parse(typeof(ELEMENT), (string)PhotonNetwork.LocalPlayer.CustomProperties["element"]);
@@ -85,17 +90,25 @@ public class ElementController : MonoBehaviour
         info.playerTransform = transform;
         info.playerCamera = GetComponentInChildren<Camera>();
         info.bendables = FindObjectsOfType<BendableObject>();
+        info.targetBendable = info.bendables.Where(i => i is ITargetable && i.Element == element)
+            .Where(i => Vector3.Dot((i.transform.position - info.playerCamera.transform.position).normalized, info.playerCamera.transform.forward) > 0.95f)
+            .FirstOrDefault();
         info.caster = this;
+
+        if (info.targetBendable != null) info.targetBendable.Select();
+
         return info;
     }
 
-    private void Update()
+    private void Update() 
     {
+        AbilityInfo info = GetInfo();
+
         for (int i = 0; i < abilities.Count; i++)
         {
             AbilityIndex abilInd = abilities[i];
 
-            abilInd.ability.Tick(GetInfo());
+            abilInd.ability.Tick(info);
 
             if (abilInd.currentCooldown > 0f) abilInd.currentCooldown = Mathf.Max(abilInd.currentCooldown - Time.deltaTime, 0f);
             cdDisplay.SetCooldown(abilInd.abilkey, abilInd.currentCooldown, abilInd.ability.cooldown);
@@ -104,13 +117,14 @@ public class ElementController : MonoBehaviour
             if (abilInd.currentCooldown > 0f) continue;
 
             abilInd.ability.triggerIndex = 0;
-            abilInd.ability.Trigger(GetInfo());
+            abilInd.ability.Trigger(info);
 
             abilInd.currentCooldown = abilInd.ability.cooldown;
         }
     }
 
     private void FixedUpdate() => abilities.ForEach(i => i.ability.FixedTick(GetInfo()));
+
 
     private class AbilityIndex
     {

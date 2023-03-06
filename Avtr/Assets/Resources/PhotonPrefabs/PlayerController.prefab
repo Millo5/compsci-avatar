@@ -1439,6 +1439,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a36ee0eb84255408256fb21bff4278, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 256
   localClient: {fileID: 2824043231063335481}
   notLocalClient: {fileID: 6603972051191218521}
   healthbarImage: {fileID: 5665127199720232670}
@@ -1449,9 +1452,6 @@ MonoBehaviour:
   jumpForce: 250
   smoothTime: 0.1
   smoothTimeAirborne: 0.6
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!54 &4193845706099884070
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1518,6 +1518,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   elementManager: {fileID: 11400000, guid: 3d7c6b2f8f5d70a4391d150462fe30bf, type: 2}
+  selectedMaterial: {fileID: 2100000, guid: cb284098b1237ef4cb7e6fb5afc411bd, type: 2}
   lastSphere: {fileID: 0}
 --- !u!114 &8208145034719417696
 MonoBehaviour:

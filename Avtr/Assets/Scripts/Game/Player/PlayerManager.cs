@@ -45,15 +45,23 @@ public class PlayerManager : MonoBehaviour
         {
             Transform spawnpoint = SpawnManager.Instance.GetSpawnpoint();
             Object prefab = Resources.Load(Path.Combine("PhotonPrefabs", "PlayerController"));
-            Instantiate(prefab, spawnpoint.position, spawnpoint.rotation);
+            controller = (GameObject)Instantiate(prefab, spawnpoint.position, spawnpoint.rotation);
         }
     }
 
     public void Die()
     {
-        PhotonNetwork.Destroy(controller);
+        if (!RoomManager.Training)
+        {
+            PhotonNetwork.Destroy(controller);
 
-        Invoke("CreateController", 0.5f);
+            Invoke("CreateController", 0.5f);
+        } else
+        {
+            Destroy(controller);
+
+            Invoke("CreateController", 0.5f);
+        }
     }
 
     public void GetKill()

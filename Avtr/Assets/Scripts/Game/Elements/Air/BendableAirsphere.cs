@@ -15,12 +15,10 @@ public class BendableAirsphere : BendableObject, ITargetable
 
     public ElementController owner;
 
-    Rigidbody rb;
     Collider col;
-    protected void Awake()
+    protected override void Awake()
     {
         base.Awake();
-        rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
     }
 
@@ -30,7 +28,7 @@ public class BendableAirsphere : BendableObject, ITargetable
     }
 
 
-    protected void Update()
+    protected override void Update()
     {
         base.Update();
 
@@ -68,7 +66,6 @@ public class BendableAirsphere : BendableObject, ITargetable
 
     public bool CastAbility()
     {
-
         return false;
     }
 }

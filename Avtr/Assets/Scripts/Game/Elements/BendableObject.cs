@@ -17,13 +17,15 @@ public class BendableObject : MonoBehaviour
 
     protected List<HittableEntity> hittablesInTrigger = new List<HittableEntity>();
 
+    protected Rigidbody rb;
 
-
-    protected void Awake()
+    protected virtual void Awake()
     {
         selectedRenderer.gameObject.SetActive(false);
+        rb = GetComponent<Rigidbody>();
+
     }
-    protected void Update()
+    protected virtual void Update()
     {
         if (selected > 0)
         {

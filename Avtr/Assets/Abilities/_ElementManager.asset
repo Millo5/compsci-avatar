@@ -28,7 +28,7 @@ MonoBehaviour:
     shift: {fileID: 0}
   waterAbilities:
     rightClick: {fileID: 0}
-    leftClick: {fileID: 0}
+    leftClick: {fileID: 11400000, guid: 9a3c2c97978ef184684eb6ec22ecebe4, type: 2}
     f: {fileID: 0}
     q: {fileID: 0}
     e: {fileID: 0}

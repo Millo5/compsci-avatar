@@ -92,6 +92,7 @@ public class ElementController : MonoBehaviour
         info.bendables = FindObjectsOfType<BendableObject>();
         info.targetBendable = info.bendables.Where(i => i is ITargetable && i.Element == element)
             .Where(i => Vector3.Dot((i.transform.position - info.playerCamera.transform.position).normalized, info.playerCamera.transform.forward) > 0.95f)
+            .OrderBy(i => Vector3.Dot((i.transform.position - info.playerCamera.transform.position).normalized, info.playerCamera.transform.forward))
             .FirstOrDefault();
         info.caster = this;
 

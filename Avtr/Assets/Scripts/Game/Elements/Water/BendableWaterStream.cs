@@ -35,9 +35,10 @@ public class BendableWaterStream : WaterBendable
             time += Time.fixedDeltaTime;
 
             position = Vector3.Lerp(startPosition, targetPosition, time / targetTime);
-            position += Mathf.Sin(time / targetTime * Mathf.PI) * offsetDirection;
+            position += Mathf.Sin(time / targetTime * Mathf.PI) * offsetDirection * 0.01f;
 
-            rb.MovePosition(position);
+            transform.position = position;
+            //rb.MovePosition(position);
         }
     }
 

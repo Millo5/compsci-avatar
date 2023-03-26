@@ -7,7 +7,6 @@ using UnityEngine.Assertions.Must;
 public class BendableAirsphere : BendableObject, ITargetable
 {
 
-
     private float size = 0f;
 
     private bool destroy = false;
@@ -20,6 +19,7 @@ public class BendableAirsphere : BendableObject, ITargetable
     {
         base.Awake();
         col = GetComponent<Collider>();
+        
     }
 
     private void Start()

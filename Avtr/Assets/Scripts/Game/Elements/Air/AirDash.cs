@@ -11,47 +11,47 @@ namespace Elements
     [CreateAssetMenu(fileName = "AirDash", menuName = "Elements/Air/Air Dash", order = 1)]
     public class AirDash : ElementAbility
     {
-
         public override ELEMENT element => ELEMENT.Air;
+
         public override float cooldown => 0.8f;
 
-        private Vector3 dashDir;
-        private float dashDist = 0f;
+        private Vector3 targetPos;
+        private float dashTime = 0f;
+        private Vector3 startPos;
+        private bool targeted = false;
 
-
-        public override void Tick(AbilityInfo info)
+        public override void FixedTick(AbilityInfo info)
         {
-
-            if (dashDist > 0f)
+            if (dashTime > 0f)
             {
-                float d = 8f * Time.deltaTime;
-                dashDist -= d;
-
-
-                info.caster.controller.SetVelocity(dashDir * d / Time.deltaTime);
-
-                if (dashDist <= 0f)
+                dashTime -= Time.fixedDeltaTime * 5f;
+                info.caster.rb.MovePosition(Vector3.Lerp(targetPos, startPos, dashTime));
+                if (dashTime <= 0f)
                 {
-                    info.caster.controller.SetVelocity(Vector3.zero);
+                    info.caster.transform.position = targetPos;
+                    info.caster.rb.velocity = Vector3.zero;
+
+                    if (targeted)
+                    {
+                        info.caster.controller.Levitate(1f);
+                        info.caster.setCooldown(ABILKEY.SHIFT, 0.2f);
+                    }
                 }
             }
-
         }
 
         public override void Trigger(AbilityInfo info)
         {
-            Transform transform = info.playerTransform;
-            
+            dashTime = 1f;
+            startPos = info.playerTransform.position;
+
+            targetPos = info.playerTransform.position + info.playerCamera.transform.forward * 2.5f;
+            targeted = false;
             if (info.targetBendable != null)
             {
-                dashDir = info.targetBendable.transform.position - transform.position;
-                dashDist = Vector3.Distance(transform.position, info.targetBendable.transform.position);
-                return;
+                targeted = true;
+                targetPos = info.targetBendable.transform.position;
             }
-
-            dashDist = 1f;
-            dashDir = info.playerCamera.transform.forward;
-
         }
     }
 }

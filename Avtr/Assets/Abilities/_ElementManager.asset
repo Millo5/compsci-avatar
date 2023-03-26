@@ -15,7 +15,7 @@ MonoBehaviour:
   airAbilities:
     rightClick: {fileID: 0}
     leftClick: {fileID: 0}
-    f: {fileID: 0}
+    f: {fileID: 11400000, guid: f7ecab8eab15c7d419042af054040db3, type: 2}
     q: {fileID: 11400000, guid: b9d45554ef925a6418cdd5878d332f19, type: 2}
     e: {fileID: 0}
     shift: {fileID: 11400000, guid: 68963eda404bc1245a62bba05ba17be9, type: 2}

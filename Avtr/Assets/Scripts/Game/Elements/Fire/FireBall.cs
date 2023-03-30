@@ -10,10 +10,9 @@ namespace Elements
     {
 
         [SerializeField] GameObject fireballPrefab;
-
         public override ELEMENT element => ELEMENT.Fire;
 
-        public override float cooldown => 1.2f;
+        public override float cooldown => 0.6f;
 
         public override void Trigger(AbilityInfo info)
         {
@@ -21,9 +20,10 @@ namespace Elements
             Vector3 pos = info.playerCamera.transform.position + info.playerCamera.transform.forward * 2f;
 
             Instantiate(fireballPrefab, pos, info.playerCamera.transform.rotation)
-                .GetComponent<Rigidbody>().AddForce(info.playerCamera.transform.forward * 5f);
+                .GetComponent<Rigidbody>().AddForce(info.playerCamera.transform.forward * 800f);
 
-        }
+            
+        }       
     }
 }
 

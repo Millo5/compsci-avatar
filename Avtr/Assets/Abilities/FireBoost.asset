@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6088ca0259dcd744a47f76435516b26, type: 3}
-  m_Name: FireBall
+  m_Script: {fileID: 11500000, guid: 6e0c466f8eb60a94caacc9380ce62ac6, type: 3}
+  m_Name: FireBoost
   m_EditorClassIdentifier: 
-  fireballPrefab: {fileID: 1153444808334381237, guid: 8458edafedc0a2747a30dfbaf9b5414f, type: 3}
+  fireboostPrefab: {fileID: 0}

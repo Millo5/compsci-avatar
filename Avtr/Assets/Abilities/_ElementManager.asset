@@ -22,10 +22,10 @@ MonoBehaviour:
   fireAbilities:
     rightClick: {fileID: 0}
     leftClick: {fileID: 11400000, guid: ec42d613e28875549b70eb8c6dc2a994, type: 2}
-    f: {fileID: 0}
+    f: {fileID: 11400000, guid: 4c0eb0866e415ac4f9ff18efee72ab13, type: 2}
     q: {fileID: 0}
     e: {fileID: 0}
-    shift: {fileID: 0}
+    shift: {fileID: 11400000, guid: a75d012b8a1ee3a4a9515e9a4f3ef63e, type: 2}
   waterAbilities:
     rightClick: {fileID: 0}
     leftClick: {fileID: 0}

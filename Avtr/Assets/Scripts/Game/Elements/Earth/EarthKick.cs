@@ -11,19 +11,12 @@ namespace Elements
     {
         public override ELEMENT element => ELEMENT.Earth;
 
-        public override float cooldown => 1f;
+        public override float cooldown => 0.5f;
 
         public override void Trigger(AbilityInfo info)
         {
-            info.bendables.Where(
-                i => i.Element == ELEMENT.Earth &&
-                Vector3.Distance(i.transform.position, info.playerTransform.position) < 2f &&
-                Vector3.Dot(i.transform.position - info.playerTransform.position, info.playerTransform.forward) > 0f)
-                .ToList().ForEach(i =>
-            {
-                if (i.grounded) i.GetComponent<Rigidbody>().AddForce(Vector3.up * 5f, ForceMode.Impulse);
-                else i.GetComponent<Rigidbody>().AddForce(info.playerTransform.forward * 8f); 
-            });
+
+            info.bendables.Where(i => i.Element == ELEMENT.Earth && Vector3.Distance(i.transform.position, info.playerTransform.position) < 2f && Vector3.Dot(i.transform.position - info.playerTransform.position, info.playerTransform.forward) > 0f).ToList().ForEach(i => i.GetComponent<Rigidbody>().AddForce(info.playerCamera.transform.forward * 1000f + Vector3.up * 300f));
         }
     }
 }

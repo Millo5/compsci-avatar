@@ -35,8 +35,8 @@ MonoBehaviour:
     shift: {fileID: 0}
   earthAbilities:
     rightClick: {fileID: 11400000, guid: efce71ede63b6754fb85dd6e0a96b28c, type: 2}
-    leftClick: {fileID: 11400000, guid: efce71ede63b6754fb85dd6e0a96b28c, type: 2}
-    f: {fileID: 11400000, guid: 883fe04a73f6a2840bc70b1e5716d3a8, type: 2}
-    q: {fileID: 11400000, guid: 346c2b90a3fe74144b17cce15ad50f40, type: 2}
+    leftClick: {fileID: 11400000, guid: 883fe04a73f6a2840bc70b1e5716d3a8, type: 2}
+    f: {fileID: 11400000, guid: 346c2b90a3fe74144b17cce15ad50f40, type: 2}
+    q: {fileID: 0}
     e: {fileID: 0}
     shift: {fileID: 0}

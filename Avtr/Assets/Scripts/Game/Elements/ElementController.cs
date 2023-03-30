@@ -25,6 +25,8 @@ public class ElementController : MonoBehaviour
     // Element Specific Variables
     public BendableAirsphere lastSphere;
 
+    public Rigidbody rb => controller.rb;
+
     private void Awake()
     {
         PV = GetComponent<PhotonView>();
@@ -99,6 +101,12 @@ public class ElementController : MonoBehaviour
         if (info.targetBendable != null) info.targetBendable.Select();
 
         return info;
+    }
+
+    public void setCooldown(ABILKEY key, float time)
+    {
+        print("SET COOLDOWN " + key + " " + time);
+        abilities.FirstOrDefault(i => i.abilkey == key).currentCooldown = time;
     }
 
     private void Update() 

@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -174,8 +175,9 @@ public class PlayerController : HittableEntity
         }
     }
 
-    private void FixedUpdate()
+    protected override void FixedUpdate()
     {
+        base.FixedUpdate();
         if (!isMine)
             return;
 
@@ -207,9 +209,6 @@ public class PlayerController : HittableEntity
     }
 
 
-    public void SetVelocity()
-    {
-        print("ffs");
-    }
+
 }
 

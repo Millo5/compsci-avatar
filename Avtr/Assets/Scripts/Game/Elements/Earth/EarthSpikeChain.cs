@@ -15,7 +15,7 @@ namespace Elements
 
         public override ELEMENT element => ELEMENT.Earth;
 
-        public override float cooldown => 1.2f;
+        public override float cooldown => 5.0f;
 
         public override void FixedTick(AbilityInfo info)
         {

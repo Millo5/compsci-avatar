@@ -15,7 +15,7 @@ MonoBehaviour:
   airAbilities:
     rightClick: {fileID: 0}
     leftClick: {fileID: 0}
-    f: {fileID: 0}
+    f: {fileID: 11400000, guid: f7ecab8eab15c7d419042af054040db3, type: 2}
     q: {fileID: 11400000, guid: b9d45554ef925a6418cdd5878d332f19, type: 2}
     e: {fileID: 0}
     shift: {fileID: 11400000, guid: 68963eda404bc1245a62bba05ba17be9, type: 2}
@@ -28,15 +28,15 @@ MonoBehaviour:
     shift: {fileID: 11400000, guid: a75d012b8a1ee3a4a9515e9a4f3ef63e, type: 2}
   waterAbilities:
     rightClick: {fileID: 0}
-    leftClick: {fileID: 0}
+    leftClick: {fileID: 11400000, guid: 9a3c2c97978ef184684eb6ec22ecebe4, type: 2}
     f: {fileID: 0}
     q: {fileID: 0}
     e: {fileID: 0}
     shift: {fileID: 0}
   earthAbilities:
     rightClick: {fileID: 11400000, guid: efce71ede63b6754fb85dd6e0a96b28c, type: 2}
-    leftClick: {fileID: 11400000, guid: efce71ede63b6754fb85dd6e0a96b28c, type: 2}
-    f: {fileID: 11400000, guid: 883fe04a73f6a2840bc70b1e5716d3a8, type: 2}
-    q: {fileID: 11400000, guid: 346c2b90a3fe74144b17cce15ad50f40, type: 2}
+    leftClick: {fileID: 11400000, guid: 883fe04a73f6a2840bc70b1e5716d3a8, type: 2}
+    f: {fileID: 11400000, guid: 346c2b90a3fe74144b17cce15ad50f40, type: 2}
+    q: {fileID: 0}
     e: {fileID: 0}
     shift: {fileID: 0}
